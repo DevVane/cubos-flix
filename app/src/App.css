@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+
+}
+
+button{
+  width: 168px;
+  cursor: pointer;
+}
+
+.App {
+  --escuro-input: #171B1E;
+  --escuro-header: #0F1C26;
+  
+  display: grid;
+  grid-template-areas: 
+  "header header"
+  "main sacola";
+  background-color: #3F3F3F;
+  color: white;
+  
+}
+.header {grid-area: header;}
+.main {grid-area: main;}
+.sacola {grid-area: sacola;}
+
+.header {
+  background-color: var(--escuro-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.25rem 0px;
+}
+
+.banner{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-image: url(./assets/images/bg-promotion.svg);
+  background-size: cover;
+  color: black;
+  cursor: pointer;
+}
+
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: red;
+  width: 168px;
+  height: 301px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cupom{
+  display: flex;
+  place-items: center;
+  place-content: center;
+}
+
+.flex{
+  display: flex;
+  place-items: center;
+}
+
+.grid-filmes{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  
+}
+
+.main{
+  margin-left: 4rem;
+}
+
+.profile img{
+  max-width: 56px;
+  max-height: 56px;
+}
+
+.sacola{
+  background-color: blueviolet;
+  width: 312px;
+  height: 537px;
+  place-items: center;
+}
+
+
