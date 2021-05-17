@@ -12,6 +12,9 @@ function App() {
   const [filtro, setFiltro] = useState('todos');
   const [nomeBusca, setNomeBusca] = useState("");
   const [mostrarBanner, setMostrarBanner] = useState(true);
+  const [cupom, setCupom] = useState("");
+  const [sacolaVazia, setSacolaVazia] = useState(true);
+  const [filmesNaSacola, setFilmesNaSacola] = useState([]);
 
   useEffect(() => {
     setFilmes(filmes);
@@ -81,10 +84,15 @@ function App() {
   function esconder(){
     setMostrarBanner(false);
   }
+
+  function aplicarCupom(cupom){
+    setCupom(cupom); //aplica o cupom
+    esconder();      //faz o banner sumir
+  }
   
-  function Banner(){
+  function Banner(props){
     return(
-      <div className="banner" style = {{display: mostrarBanner ? 'grid' : 'none'}} onClick={esconder}>
+      <div className="banner" style = {{display: mostrarBanner ? 'grid' : 'none'}} onClick={() => aplicarCupom(props.cupom)}>
           <div >
             <h1>APROVEITE AGORA </h1>
             <div className="flex">
@@ -115,7 +123,7 @@ function App() {
 </defs>
 </svg>
 
-              <p>CUPOM: <span>HTMLNAOELINGUAGEM</span></p>
+              <p>CUPOM: <span>{props.cupom}</span></p>
             </div>
           </div>
     
@@ -143,6 +151,29 @@ function App() {
     );
   }
 
+  function addNaSacola(filme){
+    setSacolaVazia(false);
+    setFilmesNaSacola([...filmesNaSacola, filme]); //setando o valor q ja tava junto do novo
+  }
+
+  function CarrinhoFilmes(props){
+    return(
+      <div>
+      {
+        props.filmes.map(filme => (
+          <div className="filmes-carrinho">
+            <img className="imgNoCarrinho" src={filme.backgroundImg}></img>
+            <div className="carrinho">
+            <p>{filme.title}</p>
+            <p>R$ {filme.price}</p>
+          </div>
+          </div>
+        ))
+      
+      }
+      </div>
+    );
+  }
 
   function TopFilmes(){
     const topFilmes = [];
@@ -159,7 +190,7 @@ function App() {
 
           <div>
             <h2>{filme.title} {filme.starsCount}</h2>
-            <button>Sacola R${filme.price}</button>
+            <button onClick={() => addNaSacola(filme)}>Sacola R${filme.price}</button>
           </div>
         </div>
   
@@ -190,7 +221,7 @@ function App() {
 
               <div>
                 <h2>{filme.title} {filme.starsCount}</h2>
-                <button >Sacola R${filme.price}</button>
+                <button onClick={() => addNaSacola(filme)}>Sacola R${filme.price}</button>
               </div>
             </div>
       
@@ -216,9 +247,10 @@ function App() {
           <h1>Sacola</h1>
         </div>
         <div>
-          <h2>Sua sacola está vazia</h2>
-          <h3>Adicione filmes agora</h3>
-          <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div style = {{display: sacolaVazia ? 'grid' : 'none'}}>
+            <h2>Sua sacola está vazia</h2>
+            <h3>Adicione filmes agora</h3>
+            <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M164.86 83.0158L97.1252 57.8908C95.0627 57.1408 92.8127 58.1721 92.0627 60.2346L46.3127 183.375C45.5627 185.438 46.594 187.688 48.6565 188.438L116.391 213.563C118.453 214.313 120.703 213.281 121.453 211.219L167.203 88.0315C167.953 86.0158 166.922 83.7658 164.86 83.0158Z" fill="#593F8F"/>
 <path opacity="0.09" d="M124.266 146.109C122.579 146.109 120.844 146.062 119.063 145.969C92.766 144.516 71.2973 132.797 61.641 114.656C46.2191 85.6874 61.3598 45.3281 84.5629 32.6249C96.2816 26.1562 106.453 26.3437 112.922 27.6562C123.985 29.8593 132.141 34.9687 135.891 41.9999C139.922 49.5468 137.766 56.6249 135.469 64.078C133.407 70.7812 131.297 77.6718 133.829 85.1249C136.079 91.7812 141.938 93.8437 148.172 96.0468C154.5 98.2968 161.063 100.594 164.578 107.859C168.282 115.547 167.813 126.047 163.547 132.375C157.735 140.812 142.36 146.109 124.266 146.109ZM105.61 27.4687C99.8441 27.4687 92.6723 28.7812 84.8441 33.0937C61.8754 45.7031 46.8754 85.7343 62.1566 114.422C71.7191 132.422 93.0473 144 119.157 145.453C139.219 146.578 156.891 141.187 163.125 132.094C167.297 125.953 167.766 115.641 164.11 108.141C160.688 101.062 154.266 98.8124 148.032 96.6093C141.703 94.3593 135.704 92.2499 133.36 85.3593C130.782 77.7187 132.938 70.7343 135 63.9374C137.25 56.578 139.407 49.5937 135.469 42.2343C131.813 35.3437 123.75 30.3281 112.875 28.1718C110.766 27.7499 108.329 27.4687 105.61 27.4687Z" fill="#AAAAD5"/>
 <path opacity="0.2" d="M148.453 76.9219L140.953 81.9375L75.4688 125.906L65.1094 132.891L79.3594 94.4062L89.7656 87.4219L113.25 71.625L120.75 66.6094L148.453 76.9219Z" fill="#EEEDF3"/>
@@ -256,12 +288,15 @@ function App() {
 <path d="M91.646 130.428L126.639 108.868C127.423 108.388 128.427 108.434 129.16 109.001C132.485 111.561 135.455 114.157 137.437 116.339C137.437 116.339 139.144 118.087 139.883 119.196C141.076 120.708 141.65 122.686 141.65 124.607C141.65 126.764 141.021 128.803 139.768 130.433C139.484 130.724 138.4 132.007 137.377 133.055C131.407 139.575 115.822 150.348 107.625 153.613C106.432 154.139 103.247 155.238 101.595 155.299C100.003 155.299 98.465 154.952 96.9874 154.19C95.1703 153.143 93.7476 151.518 92.9489 149.591C92.4347 148.252 91.641 144.236 91.641 144.118C91.1269 141.251 90.7425 137.225 90.5528 132.523C90.5178 131.68 90.9422 130.862 91.646 130.428Z" fill="#FCBDEB"/>
 <path opacity="0.4" d="M93.9863 118.815C92.4438 119.771 90.5019 118.55 90.5768 116.715C90.7615 112.412 91.081 108.621 91.4704 105.8C91.5303 105.738 92.324 100.736 93.2375 99.0441C94.8299 95.9013 97.9549 93.9799 101.314 93.9799H101.594C103.76 94.0361 108.368 95.9575 108.368 96.0751C110.689 97.0409 113.719 98.6762 116.979 100.644C118.447 101.533 118.482 103.715 117.014 104.619L93.9863 118.815Z" fill="#F089D3"/>
 </svg>
-
+          </div>
+          <div style = {{display: !sacolaVazia ? 'flex' : 'none'}}>
+            <CarrinhoFilmes filmes={filmesNaSacola}/>
+          </div>
 
         </div>
 
         <div className="cupom flex"></div>
-          <input type="text" placeholder="Cupom de desconto" ></input>
+          <input type="text" placeholder="Cupom de desconto" value={cupom}></input>
           <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path opacity="0.4" d="M10.1203 3.54248V5.55915" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
 <path opacity="0.4" d="M10.1203 14.8008V16.4875" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
@@ -277,7 +312,7 @@ function App() {
       <Header/>
     
       <div className="main">
-        <Banner/>
+        <Banner cupom="HTMLNAOELINGUAGEM"/>
         <div className="top-filmes">
           <h1>Top Filmes</h1>
           <TopFilmes/>  

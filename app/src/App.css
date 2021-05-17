@@ -59,6 +59,12 @@ button{
   background-repeat: no-repeat;
 }
 
+.carrinho{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
 .cupom{
   display: flex;
   place-items: center;
@@ -70,19 +76,30 @@ button{
   place-items: center;
 }
 
+.filmes-carrinho{
+  display: flex;
+  margin: 0.5rem 0px;
+}
+
 .grid-filmes{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   
 }
 
+.imgNoCarrinho{
+  width: 43px;
+  height: 67px;
+}
+
 .main{
-  margin-left: 4rem;
+  margin-top: 0.5rem;
+  margin-left: 4rem
 }
 
 .profile img{
-  max-width: 56px;
-  max-height: 56px;
+  max-width: 60px;
+  max-height: 60px;
 }
 
 .sacola{
