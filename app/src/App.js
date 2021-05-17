@@ -3,7 +3,9 @@ import {Movies} from './data';
 import logo from './assets/images/logo.svg';
 import user from './assets/images/me.jpg'
 import money from './assets/images/money.png'
-import { useState, useEffect } from 'react';
+import subtrair from './assets/images/minus-icon.svg'
+import somar from './assets/images/plus-icon.svg'
+import {useState, useEffect} from 'react';
 
 
 
@@ -15,6 +17,7 @@ function App() {
   const [cupom, setCupom] = useState("");
   const [sacolaVazia, setSacolaVazia] = useState(true);
   const [filmesNaSacola, setFilmesNaSacola] = useState([]);
+  const [cont, setCont] = useState(1);
 
   useEffect(() => {
     setFilmes(filmes);
@@ -156,6 +159,14 @@ function App() {
     setFilmesNaSacola([...filmesNaSacola, filme]); //setando o valor q ja tava junto do novo
   }
 
+  function somarUm(){
+    setCont((prevCont) => prevCont + 1);
+  }
+  function subtrairUm(){
+    if(cont <= 0) return;
+    setCont((prevCont) => prevCont - 1);
+  }
+
   function CarrinhoFilmes(props){
     return(
       <div>
@@ -164,9 +175,14 @@ function App() {
           <div className="filmes-carrinho">
             <img className="imgNoCarrinho" src={filme.backgroundImg}></img>
             <div className="carrinho">
-            <p>{filme.title}</p>
-            <p>R$ {filme.price}</p>
-          </div>
+              <p>{filme.title}</p>
+              <p>R$ {filme.price}</p>
+            </div>
+            <div className="flex">
+              <img className="img-button" onClick={somarUm} src={somar}></img>
+              <p>{cont}</p>
+              <img className="img-button" onClick={subtrairUm} src={subtrair}></img>
+            </div>
           </div>
         ))
       

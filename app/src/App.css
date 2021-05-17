@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-
 }
 
 button{
@@ -61,8 +60,11 @@ button{
 
 .carrinho{
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  flex-direction: column;
+}
+
+.carrinho p{
+  margin: 0;
 }
 
 .cupom{
@@ -79,12 +81,18 @@ button{
 .filmes-carrinho{
   display: flex;
   margin: 0.5rem 0px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .grid-filmes{
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   
+}
+
+.img-button{
+  cursor: pointer;
 }
 
 .imgNoCarrinho{
